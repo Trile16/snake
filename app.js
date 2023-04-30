@@ -15,18 +15,18 @@ let snake = {
   highScore: 0,
 };
 
-let checkStateHighScore = localStorage.getItem("snakeHighScore");
-
-if (checkStateHighScore) {
-  snake.highScore = parseInt(checkStateHighScore);
-  snake.highScore.innerHTML = `High Score: ${snake.highScore}`;
-}
-
 const gameDisplay = document.getElementById("game-display");
 const currentScore = document.getElementById("current-score");
 const highScore = document.getElementById("high-score");
 const mobileLeft = document.getElementById("mobile-left");
 const mobileRight = document.getElementById("mobile-right");
+
+let checkStateHighScore = localStorage.getItem("snakeHighScore");
+
+if (checkStateHighScore) {
+  snake.highScore = parseInt(checkStateHighScore);
+  highScore.innerHTML = `High Score: ${snake.highScore}`;
+}
 
 document.addEventListener("keydown", checkKey);
 mobileLeft.addEventListener("click", mobileLeftClick);
