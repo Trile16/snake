@@ -18,12 +18,16 @@ let snake = {
 const gameDisplay = document.getElementById("game-display");
 const currentScore = document.getElementById("current-score");
 const highScore = document.getElementById("high-score");
+const mobileLeft = document.getElementById("mobile-left");
+const mobileRight = document.getElementById("mobile-right");
 
 document.addEventListener("keydown", checkKey);
+mobileLeft.addEventListener("click", mobileLeftClick);
+mobileRight.addEventListener("click", mobileRightClick);
 
 function renderGrid() {
   for (let i = 0; i < 40; i++) {
-    for (let j = 0; j < 50; j++) {
+    for (let j = 0; j < 40; j++) {
       const cell = document.createElement("div");
       cell.setAttribute("class", "cell");
       cell.setAttribute("id", `${i}-${j}`);
@@ -46,7 +50,7 @@ function createPoint() {
 
   while (!pointCheck) {
     let randomVertical = Math.floor(Math.random() * 39);
-    let randomHorizontal = Math.floor(Math.random() * 49);
+    let randomHorizontal = Math.floor(Math.random() * 39);
     let uniqueCell = true;
 
     for (let i = 0; i < snake.body.length; i++) {
@@ -73,7 +77,7 @@ function createPoint() {
 
 function boardClear() {
   for (let i = 0; i < 40; i++) {
-    for (let j = 0; j < 50; j++) {
+    for (let j = 0; j < 40; j++) {
       const cell = document.getElementById(`${i}-${j}`);
       cell.style.removeProperty("background-color");
     }
@@ -100,6 +104,7 @@ renderGrid();
 gameStart();
 createPoint();
 
+// Desktop Controls
 function checkKey(e) {
   if (e.key === "ArrowUp") {
     // Up
@@ -128,6 +133,39 @@ function checkKey(e) {
   }
 }
 
+// Mobile Controls
+function mobileLeftClick() {
+  if (snake.checkWhichDirection === "up") {
+    snake.direction === "left";
+    snake.nextDirection = [0, -1];
+  } else if (snake.checkWhichDirection === "right") {
+    snake.direction === "up";
+    snake.nextDirection = [-1, 0];
+  } else if (snake.checkWhichDirection === "down") {
+    snake.direction === "right";
+    snake.nextDirection = [0, 1];
+  } else if (snake.checkWhichDirection === "left") {
+    snake.direction === "down";
+    snake.nextDirection = [1, 0];
+  }
+}
+
+function mobileRightClick() {
+  if (snake.checkWhichDirection === "up") {
+    snake.direction === "right";
+    snake.nextDirection = [0, 1];
+  } else if (snake.checkWhichDirection === "right") {
+    snake.direction === "down";
+    snake.nextDirection = [1, 0];
+  } else if (snake.checkWhichDirection === "down") {
+    snake.direction === "left";
+    snake.nextDirection = [0, -1];
+  } else if (snake.checkWhichDirection === "left") {
+    snake.direction === "up";
+    snake.nextDirection = [-1, 0];
+  }
+}
+
 setInterval(() => {
   let head = snake.body[snake.body.length - 1];
   let verticalValue = head[0];
@@ -138,7 +176,7 @@ setInterval(() => {
   if (
     verticalValue > 39 ||
     verticalValue < 0 ||
-    horizontalValue > 49 ||
+    horizontalValue > 39 ||
     horizontalValue < 0
   ) {
     boardClear();
