@@ -38,7 +38,6 @@ function gameStart() {
       `${snake.body[i][0]}-${snake.body[i][1]}`
     );
     cell.style.backgroundColor = "black";
-    console.log(cell);
   }
 }
 
@@ -107,40 +106,34 @@ function checkKey(e) {
     if (snake.checkWhichDirection != "down") {
       snake.direction = "up";
       snake.nextDirection = [-1, 0];
-      console.log(snake.direction);
     }
   } else if (e.key === "ArrowDown") {
     // Down
     if (snake.checkWhichDirection != "up") {
       snake.direction = "down";
       snake.nextDirection = [1, 0];
-      console.log(snake.direction);
     }
   } else if (e.key === "ArrowLeft") {
     // Left
     if (snake.checkWhichDirection != "right") {
       snake.direction = "left";
       snake.nextDirection = [0, -1];
-      console.log(snake.direction);
     }
   } else if (e.key === "ArrowRight") {
     // Right
     if (snake.checkWhichDirection != "left") {
       snake.direction = "right";
       snake.nextDirection = [0, 1];
-      console.log(snake.direction);
     }
   }
 }
 
 setInterval(() => {
-  console.log("snake body", snake.body);
   let head = snake.body[snake.body.length - 1];
   let verticalValue = head[0];
   let horizontalValue = head[1];
   verticalValue += snake.nextDirection[0];
   horizontalValue += snake.nextDirection[1];
-  console.log(head);
 
   if (
     verticalValue > 39 ||
