@@ -19,7 +19,7 @@ let checkStateHighScore = localStorage.getItem("snakeHighScore");
 
 if (checkStateHighScore) {
   snake.highScore = parseInt(checkStateHighScore);
-  highScore.innerHTML = `High Score: ${snake.highScore}`;
+  snake.highScore.innerHTML = `High Score: ${snake.highScore}`;
 }
 
 const gameDisplay = document.getElementById("game-display");
