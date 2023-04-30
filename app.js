@@ -29,6 +29,22 @@ if (checkStateHighScore) {
 }
 
 document.addEventListener("keydown", checkKey);
+
+// allows for web page to not move on key click
+
+window.addEventListener(
+  "keydown",
+  function (e) {
+    if (
+      ["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(
+        e.code
+      ) > -1
+    ) {
+      e.preventDefault();
+    }
+  },
+  false
+);
 mobileLeft.addEventListener("click", mobileLeftClick);
 mobileRight.addEventListener("click", mobileRightClick);
 

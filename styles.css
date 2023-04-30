@@ -92,6 +92,13 @@ h1 {
     background-color: lightgray;
   }
 
+  #settings-button {
+    position: relative;
+    align-self: flex-start;
+    top: 1rem;
+    left: 1rem;
+  }
+
   #game-display {
     display: flex;
     flex-flow: row wrap;
