@@ -49,8 +49,8 @@ function createPoint() {
   let pointCheck = false;
 
   while (!pointCheck) {
-    let randomVertical = Math.floor(Math.random() * 39);
-    let randomHorizontal = Math.floor(Math.random() * 39);
+    let randomVertical = Math.floor(Math.random() * 37) + 1;
+    let randomHorizontal = Math.floor(Math.random() * 37) + 1;
     let uniqueCell = true;
 
     for (let i = 0; i < snake.body.length; i++) {
