@@ -1,0 +1,221 @@
+let snake = {
+  body: [
+    [10, 0],
+    [10, 1],
+    [10, 2],
+    [10, 3],
+  ],
+  nextDirection: [0, 1],
+  direction: "right",
+  checkWhichDirection: "right",
+  point: null,
+  createPoint: false,
+  grow: 0,
+  score: 0,
+  highScore: 0,
+};
+
+const gameDisplay = document.getElementById("game-display");
+const currentScore = document.getElementById("current-score");
+const highScore = document.getElementById("high-score");
+
+document.addEventListener("keydown", checkKey);
+
+function renderGrid() {
+  for (let i = 0; i < 40; i++) {
+    for (let j = 0; j < 50; j++) {
+      const cell = document.createElement("div");
+      cell.setAttribute("class", "cell");
+      cell.setAttribute("id", `${i}-${j}`);
+      gameDisplay.appendChild(cell);
+    }
+  }
+}
+
+function gameStart() {
+  for (let i = 0; i < snake.body.length; i++) {
+    const cell = document.getElementById(
+      `${snake.body[i][0]}-${snake.body[i][1]}`
+    );
+    cell.style.backgroundColor = "black";
+    console.log(cell);
+  }
+}
+
+function createPoint() {
+  let pointCheck = false;
+
+  while (!pointCheck) {
+    let randomVertical = Math.floor(Math.random() * 39);
+    let randomHorizontal = Math.floor(Math.random() * 49);
+    let uniqueCell = true;
+
+    for (let i = 0; i < snake.body.length; i++) {
+      if (
+        randomVertical === snake.body[i][0] &&
+        randomHorizontal === snake.body[i][1]
+      ) {
+        uniqueCell = false;
+        break;
+      }
+    }
+
+    if (uniqueCell) {
+      snake.point = [randomVertical, randomHorizontal];
+
+      const cell = document.getElementById(
+        `${randomVertical}-${randomHorizontal}`
+      );
+      cell.style.backgroundColor = "red";
+      pointCheck = true;
+    }
+  }
+}
+
+function boardClear() {
+  for (let i = 0; i < 40; i++) {
+    for (let j = 0; j < 50; j++) {
+      const cell = document.getElementById(`${i}-${j}`);
+      cell.style.removeProperty("background-color");
+    }
+  }
+}
+
+function resetGameState() {
+  snake.body = [
+    [10, 0],
+    [10, 1],
+    [10, 2],
+    [10, 3],
+  ];
+  snake.nextDirection = [0, 1];
+  snake.direction = "right";
+  snake.checkWhichDirection = "right";
+  snake.point = null;
+  snake.score = 0;
+
+  currentScore.innerHTML = `Score: ${snake.score}`;
+}
+
+renderGrid();
+gameStart();
+createPoint();
+
+function checkKey(e) {
+  if (e.key === "ArrowUp") {
+    // Up
+    if (snake.checkWhichDirection != "down") {
+      snake.direction = "up";
+      snake.nextDirection = [-1, 0];
+      console.log(snake.direction);
+    }
+  } else if (e.key === "ArrowDown") {
+    // Down
+    if (snake.checkWhichDirection != "up") {
+      snake.direction = "down";
+      snake.nextDirection = [1, 0];
+      console.log(snake.direction);
+    }
+  } else if (e.key === "ArrowLeft") {
+    // Left
+    if (snake.checkWhichDirection != "right") {
+      snake.direction = "left";
+      snake.nextDirection = [0, -1];
+      console.log(snake.direction);
+    }
+  } else if (e.key === "ArrowRight") {
+    // Right
+    if (snake.checkWhichDirection != "left") {
+      snake.direction = "right";
+      snake.nextDirection = [0, 1];
+      console.log(snake.direction);
+    }
+  }
+}
+
+setInterval(() => {
+  console.log("snake body", snake.body);
+  let head = snake.body[snake.body.length - 1];
+  let verticalValue = head[0];
+  let horizontalValue = head[1];
+  verticalValue += snake.nextDirection[0];
+  horizontalValue += snake.nextDirection[1];
+  console.log(head);
+
+  if (
+    verticalValue > 39 ||
+    verticalValue < 0 ||
+    horizontalValue > 49 ||
+    horizontalValue < 0
+  ) {
+    boardClear();
+    resetGameState();
+    gameStart();
+    createPoint();
+  } else {
+    let uniqueCell = true;
+
+    for (let i = 0; i < snake.body.length; i++) {
+      if (
+        verticalValue === snake.body[i][0] &&
+        horizontalValue === snake.body[i][1]
+      ) {
+        uniqueCell = false;
+        break;
+      }
+    }
+
+    if (uniqueCell) {
+      if (snake.nextDirection[0] === 1) {
+        snake.checkWhichDirection = "down";
+      } else if (snake.nextDirection[0] === -1) {
+        snake.checkWhichDirection = "up";
+      } else if (snake.nextDirection[1] === 1) {
+        snake.checkWhichDirection = "right";
+      } else if (snake.nextDirection[1] === -1) {
+        snake.checkWhichDirection = "left";
+      }
+
+      if (
+        verticalValue === snake.point[0] &&
+        horizontalValue === snake.point[1]
+      ) {
+        snake.score += 50;
+
+        if (snake.score > snake.highScore) {
+          snake.highScore = snake.score;
+        }
+
+        currentScore.innerHTML = `Score: ${snake.score}`;
+        highScore.innerHTML = `High Score: ${snake.highScore}`;
+        snake.grow = 2;
+      }
+
+      let cell = document.getElementById(`${verticalValue}-${horizontalValue}`);
+      cell.style.backgroundColor = "black";
+      snake.body.push([verticalValue, horizontalValue]);
+
+      if (snake.grow) {
+        if (snake.grow === 1) {
+          snake.createPoint = true;
+        }
+        snake.grow--;
+      } else {
+        let removedCell = snake.body.shift();
+        const cell2 = document.getElementById(
+          `${removedCell[0]}-${removedCell[1]}`
+        );
+        cell2.style.removeProperty("background-color");
+        if (snake.createPoint === true) {
+          createPoint();
+          snake.createPoint = false;
+        }
+      }
+    } else {
+      boardClear();
+      resetGameState();
+      gameStart();
+      createPoint();
+    }
+  }
+}, 50);

@@ -1,0 +1,50 @@
+* {
+  font-family: "Bruno Ace SC", cursive;
+}
+
+html {
+  height: 100%;
+  background-image: url("./assets/matrix-code.jpg");
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-size: 3rem;
+}
+.cell {
+  background-color: white;
+  height: 0.9rem;
+  width: 0.9rem;
+  border: solid 0.01rem white;
+}
+
+#game-display {
+  display: flex;
+  flex-flow: row wrap;
+  width: 51.23rem;
+  height: 100%;
+  border: solid 1px black;
+}
+
+#game-area {
+  padding: 2.5rem;
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 51.23rem;
+  height: 100%;
+  background-color: lightgray;
+}
+
+#scores {
+  display: flex;
+  justify-content: space-between;
+  width: 66%;
+}
