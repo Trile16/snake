@@ -15,6 +15,13 @@ let snake = {
   highScore: 0,
 };
 
+let checkStateHighScore = localStorage.getItem("snakeHighScore");
+
+if (checkStateHighScore) {
+  snake.highScore = parseInt(checkStateHighScore);
+  highScore.innerHTML = `High Score: ${snake.highScore}`;
+}
+
 const gameDisplay = document.getElementById("game-display");
 const currentScore = document.getElementById("current-score");
 const highScore = document.getElementById("high-score");
@@ -219,6 +226,7 @@ setInterval(() => {
 
         currentScore.innerHTML = `Score: ${snake.score}`;
         highScore.innerHTML = `High Score: ${snake.highScore}`;
+        localStorage.setItem("snakeHighScore", snake.highScore);
         snake.grow = 2;
       }
 
