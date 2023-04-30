@@ -22,15 +22,15 @@ h1 {
 }
 .cell {
   background-color: white;
-  height: 0.9rem;
-  width: 0.9rem;
-  border: solid 0.01rem white;
+  height: 1rem;
+  width: 1rem;
+  outline: 1px solid black;
 }
 
 #game-display {
   display: flex;
   flex-flow: row wrap;
-  width: 41rem;
+  width: 40rem;
   height: 100%;
   border: solid 1px black;
 }
@@ -80,14 +80,14 @@ h1 {
   }
 
   .cell {
-    height: 0.475rem;
-    width: 0.475rem;
-    border-color: black;
+    height: 0.5rem;
+    width: 0.5rem;
+    outline: 1px solid black;
   }
 
   #game-area {
     padding: 0;
-    width: 100%;
+    width: 20rem;
     height: 100%;
     background-color: lightgray;
   }
@@ -95,7 +95,7 @@ h1 {
   #game-display {
     display: flex;
     flex-flow: row wrap;
-    width: 88.3%;
+    width: 20rem;
     border: solid 1px black;
   }
 
