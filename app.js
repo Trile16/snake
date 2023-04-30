@@ -13,6 +13,8 @@ let snake = {
   grow: 0,
   score: 0,
   highScore: 0,
+  toggleSettingsMenu: false,
+  toggleGrid: true,
 };
 
 const gameDisplay = document.getElementById("game-display");
@@ -20,6 +22,12 @@ const currentScore = document.getElementById("current-score");
 const highScore = document.getElementById("high-score");
 const mobileLeft = document.getElementById("mobile-left");
 const mobileRight = document.getElementById("mobile-right");
+const settingsButton = document.getElementById("settings-button");
+const settingsMenu = document.getElementById("settings");
+const gridSetting = document.getElementById("grid-checkbox");
+
+//DOM for changing settings
+settingsMenu.style.display = "none";
 
 let checkStateHighScore = localStorage.getItem("snakeHighScore");
 
@@ -45,8 +53,11 @@ window.addEventListener(
   },
   false
 );
+
 mobileLeft.addEventListener("click", mobileLeftClick);
 mobileRight.addEventListener("click", mobileRightClick);
+settingsButton.addEventListener("click", toggleSettingsMenu);
+gridSetting.addEventListener("click", toggleGridSetting);
 
 function renderGrid() {
   for (let i = 0; i < 40; i++) {
@@ -54,6 +65,7 @@ function renderGrid() {
       const cell = document.createElement("div");
       cell.setAttribute("class", "cell");
       cell.setAttribute("id", `${i}-${j}`);
+      cell.style.outline = "solid 1px black";
       gameDisplay.appendChild(cell);
     }
   }
@@ -186,6 +198,38 @@ function mobileRightClick() {
   } else if (snake.checkWhichDirection === "left") {
     snake.direction === "up";
     snake.nextDirection = [-1, 0];
+  }
+}
+
+//Settings functions
+function toggleSettingsMenu() {
+  console.log(settingsMenu);
+  if (!snake.toggleSettingsMenu) {
+    settingsMenu.style.removeProperty("display");
+    snake.toggleSettingsMenu = true;
+  } else {
+    settingsMenu.style.display = "none";
+    snake.toggleSettingsMenu = false;
+  }
+}
+
+function toggleGridSetting() {
+  if (snake.toggleGrid) {
+    for (let i = 0; i < 40; i++) {
+      for (let j = 0; j < 40; j++) {
+        const cell = document.getElementById(`${i}-${j}`);
+        cell.style.removeProperty("outline");
+      }
+    }
+    snake.toggleGrid = false;
+  } else {
+    for (let i = 0; i < 40; i++) {
+      for (let j = 0; j < 40; j++) {
+        const cell = document.getElementById(`${i}-${j}`);
+        cell.style.outline = "solid 1px black";
+      }
+    }
+    snake.toggleGrid = true;
   }
 }
 
